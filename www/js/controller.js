@@ -66,11 +66,11 @@ app.controller('indexController', function($scope, $http, routeFactory, $state, 
 			placement: 3,
 			templateType: 'Input',
 			placeholder:'Type in something',
-			title: "ea molestias quasi",
+			title: "Title 2 in here",
 			body: "et iusto sed quo iure"
 		}];
 		$scope.directiveValues = [];
-
+		$scope.objectContainer = formObject;
 		$scope.currentPage = 0;
 		$scope.maxPages = formObject.length;
 		$scope.previousPage = function () {
@@ -91,7 +91,7 @@ app.controller('indexController', function($scope, $http, routeFactory, $state, 
 		angular.forEach(formObject, function (value, index) {
 			switch (value.templateType) {
 				case 'Input':
-				latestDiv.append($compile('<input-input></input-input>')($scope));
+				latestDiv.append($compile('<input-input index="'+index+'"></input-input>')($scope));
 					break;
 				case 'Date':
 				latestDiv.append($compile('<date-input></date-input>')($scope));
@@ -140,10 +140,21 @@ app.controller('indexController', function($scope, $http, routeFactory, $state, 
 		};
 	})
 	.directive('inputInput', function() {
+		function link(scope, element, attributes) {
+    // console.log(scope);
+		// console.log(element);
+		// console.log(attributes);
+		scope.attGet = attributes.index;
+		console.log(scope.attGet);
+		scope.directiveValues[scope.attGet]= {};
+		scope.directiveValues[scope.attGet].title = scope.objectContainer[scope.attGet].title;
+		console.log(scope.directiveValues);
+  	}
 		return {
 			restrict: 'E',
 			replace: 'true',
 			scope: false,
+			link: link,
 			templateUrl: 'input.html'
 		};
 	});
