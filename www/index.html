@@ -29,10 +29,21 @@
         <h1 class="title">Ionic Blank Starter</h1>
       </ion-header-bar>
       <ion-content>
-        <form-templates>
-
-        </form-templates>
-        {{hello}}
+        <div id="container"></div>
+        <form-generator id="insertTemplates"></form-generator>
+        <ul class="list">
+            <li class="item" >
+              <button class="button button-balanced" ng-if="currentPage > 0" ng-click="previousPage()">
+                Go back
+              </button>
+              <button class="button button-balanced" ng-if="currentPage < formDivider" ng-click="nextPage()">
+                Next
+              </button>
+              <button class="button button-balanced" ng-if="currentPage === formDivider" ng-click="submitForm()">
+                Finish
+              </button>
+            </li>
+        </ul>
       </ion-content>
     </ion-pane>
   </body>
